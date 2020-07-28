@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.anish.ShoppingSite.service.ItemServiceTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2020-07-23T21:55:36" hostname="angular" time="0.075">
+  <properties/>
+  <testcase name="createItemTestSuccessfull" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.016"/>
+  <testcase name="createItemTestforAccessDeniedException" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.001"/>
+  <testcase name="updateItemTestSuccessfull" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.001"/>
+  <testcase name="createItemTestforItemServiceException" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.003"/>
+  <testcase name="deleteItemTestforAccessDeniedException" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.006"/>
+  <testcase name="updateItemTestforItemServiceException" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.003"/>
+  <testcase name="updateItemTestforAccessDeniedException" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.001"/>
+  <testcase name="getItemTestforItemNotFoundException" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.013"/>
+  <testcase name="getItemTestSuccessfull" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.01"/>
+  <testcase name="deleteItemTestforItemNotFoundException" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.004"/>
+  <testcase name="deleteItemTestSuccessfull" classname="com.anish.ShoppingSite.service.ItemServiceTest" time="0.004"/>
+  <system-out><![CDATA[Washing Powder
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
