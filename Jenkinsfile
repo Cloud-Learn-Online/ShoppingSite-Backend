@@ -1,6 +1,6 @@
 node('master'){
                     stage('Cloning Git') {
-                        git branch: 'patch1', credentialsId: '483966d3-5c02-42cb-abbc-83a9bb9310b4', url: 'https://github.com/Cloud-Learn-Online/ShoppingSite-Backend.git'                      
+                      git credentialsId: '483966d3-5c02-42cb-abbc-83a9bb9310b4', url: 'https://github.com/Cloud-Learn-Online/ShoppingSite-Backend.git'
                     }
                       stage('Build test')
                     {
