@@ -72,7 +72,7 @@ jacocoTestReport {
     }
 }
 //Added the Task Dependency.
-tasks['sonarqube'].dependsOn jacocTestReport
+sonarqube.dependsOn("jacocTestReport")
 build.dependsOn("createFolders","sonarqube")
 
 group = 'com.anish'
