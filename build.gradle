@@ -64,7 +64,7 @@ jacocoTestReport {
     }
 }
 build.dependsOn("createFolders")
-test.finalizedBy jacocoTestReport
+
 tasks['sonarqube'].dependsOn test
 
 group = 'com.anish'
