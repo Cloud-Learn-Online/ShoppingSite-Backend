@@ -5,7 +5,7 @@ plugins {
     id 'war'
     id 'application'
     id 'org.sonarqube' version "3.0"
-	id 'jacoco'
+    id 'jacoco'
 }
 
 repositories {
@@ -51,10 +51,10 @@ task createFolders{
 
 jacocoTestReport {
     reports {
-		html.enabled true
+	html.enabled true
         xml.enabled false
         csv.enabled false
-        html.destination file("${buildDir}/jacocoHtml")
+       
     }
 }
 build.dependsOn("createFolders")
