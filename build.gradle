@@ -9,9 +9,16 @@ plugins {
 }
 sonarqube {
     properties {
-        property "sonar.projectName", "Java :: Code Coverage Demo"
+    	// Added the Sonar Server Url and token
+    	property "sonar.host.url", "http://build.learn-online.xyz:4200"
+        property "sonar.login", "f86207aa0ee5eadd71fb9d2898c31f25050084ec"
+   
+        property "sonar.projectName", "ShoppingSite Backend"
 	property "sonar.projectKey", "org.sonarqube:JacocoCodeCoverage"
-	property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/text.exec
+	
+	// This Line need the XML report not the exec report, 
+	// For that XML report needs to be enabled in the JacocoTestReport Task
+	property "sonar.jacoco.reportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
 repositories {
@@ -42,6 +49,7 @@ configurations {
         exclude group: 'org.apache.tomcat', module: 'spring-boot-starter-tomcat'
     }
 }
+
 task createFolders{
     description("Task to create Log Folder")
     String PATH = "${projectDir}/../logs"
@@ -53,20 +61,27 @@ task createFolders{
         }
     }
 }
+
 jacocoTestReport {
     reports {
 	html.enabled true
-        xml.enabled false
+	
+	//enabled the xml report so that it can be used by the Sonarqube
+        xml.enabled true
         csv.enabled false
-       
     }
 }
-build.dependsOn("createFolders")
-tasks['sonarqube'].dependsOn test
+//Added the Task Dependency.
+tasks['sonarqube'].dependsOn jacocoTestReport
+build.dependsOn("createFolders","sonarqube")
+
 group = 'com.anish'
 version = '0.0'
 description = 'ShoppingSite'
 sourceCompatibility = '1.8'
+
+
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
