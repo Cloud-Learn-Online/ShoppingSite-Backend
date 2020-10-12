@@ -15,10 +15,10 @@ public class Item extends AbstractEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message="Cannot be blank")
-	private String item_name;
+	private String itemName;
 	
 	@NotNull(message="Cannot be blank")
-	private int item_price;
+	private int itemPrice;
 	
 	@Column(name = "description", columnDefinition = "TEXT default 'empty'")
 	private String description;
@@ -60,20 +60,20 @@ public class Item extends AbstractEntity implements Serializable{
 
 
 
-	public String getItem_name() {
-		return item_name;
+	public String getItemName() {
+		return itemName;
 	}
 
-	public void setItem_name(String item_name) {
-		this.item_name = item_name;
+	public void setItemName(String item_name) {
+		this.itemName = item_name;
 	}
 
-	public int getItem_price() {
-		return item_price;
+	public int getItemPrice() {
+		return itemPrice;
 	}
 
-	public void setItem_price(int item_price) {
-		this.item_price = item_price;
+	public void setItemPrice(int item_price) {
+		this.itemPrice = item_price;
 	}
 
 	public int getQuantity() {
@@ -86,7 +86,7 @@ public class Item extends AbstractEntity implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Item [id=" + super.getId() + ", item_name=" + item_name + ", item_price=" + item_price + ", quantity=" + quantity
+		return "Item [id=" + super.getId() + ", item_name=" + itemName + ", item_price=" + itemPrice + ", quantity=" + quantity
 				+ "]";
 	}
 

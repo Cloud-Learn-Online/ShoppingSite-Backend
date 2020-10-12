@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set JARPATH=%APP_HOME%\lib\ShoppingSite-0.0.war
+set JARPATH=%APP_HOME%\lib\ShoppingSite-0.0.jar
 
 @rem Execute ShoppingSite
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %SHOPPING_SITE_OPTS%  -jar "%JARPATH%" %CMD_LINE_ARGS%

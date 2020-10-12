@@ -24,6 +24,13 @@ public interface CartItemsRepo extends JpaRepository<CartItems, Long> {
 	
 	@Transactional
 	@Modifying
-	@Query("delete from CartItems where shoppingCart=:cart")
-	public int deleteAllItems(@Param("cart") ShoppingCart cart);
+	@Query("delete from CartItems p where p.shoppingCart=(select s.shoppingCart from Users s where s.email =:email)")
+	public int deleteAllItems(@Param("email") String email);
+
+	@Query("select count(c) from CartItems c where c.shoppingCart=:cart")
+	public int countCartItemsByShoppingCart(@Param("cart") ShoppingCart shoppingCart);
+	
+	@Query("select count(c) from CartItems c where c.shoppingCart = "
+			+ "(select u.shoppingCart from Users u where u.email =:email)")
+	public int countCartItemsByEmail(@Param("email") String email);
 }

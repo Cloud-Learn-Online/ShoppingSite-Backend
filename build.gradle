@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.3.0.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
-    id 'war'
+    //id 'war'
     id 'application'
 }
 
@@ -21,9 +21,13 @@ dependencies {
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:7.0.42'
     implementation 'org.hibernate:hibernate-core:5.4.9.Final'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.11.0'
-    runtimeOnly('com.h2database:h2')
+    implementation 'com.h2database:h2'
     testCompile 'junit:junit:4.12'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+    
+    
 }
 configurations {
     all {

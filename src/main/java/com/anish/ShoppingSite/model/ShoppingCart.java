@@ -4,15 +4,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="cart")
@@ -20,21 +15,30 @@ public class ShoppingCart extends AbstractEntity implements Serializable{
 		
 	private static final long serialVersionUID = 1L;
 		
-	@JsonManagedReference
-	@OneToMany(orphanRemoval = true,cascade = CascadeType.ALL)
-	private Set<CartItems> cart_items = new HashSet<CartItems>();
+	@OneToMany(mappedBy = "shoppingCart")
+	private Set<CartItems> cartItems = new HashSet<>();
+	
+	@OneToOne(mappedBy = "shoppingCart")
+    private Users user;
 
 	public Set<CartItems> getCart_items() {
-		return cart_items;
+		return cartItems;
 	}
 
 	public void setCart_items(Set<CartItems> cart_items) {
-		this.cart_items = cart_items;
+		this.cartItems = cart_items;
 	}
 
-	
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
-		return "ShoppingCart [id=" +super.getId() + ", cart_items=" + cart_items + "]";
+		return "ShoppingCart [cart_items=" + cartItems + "]";
 	}
 }

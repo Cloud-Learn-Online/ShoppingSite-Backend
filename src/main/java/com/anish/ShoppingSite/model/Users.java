@@ -1,9 +1,14 @@
 package com.anish.ShoppingSite.model;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -16,12 +21,17 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "users")
-public class Users extends AbstractEntity {
-
-	private String user_name;
+public class Users {
+	
+	@Column(unique = true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private String id;
+	
+	private String userName;
 	
 	private String password;
 	
+	@Id
 	private String email;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
@@ -29,18 +39,30 @@ public class Users extends AbstractEntity {
 	private  Roles roles;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	private ShoppingCart shoppingCart;
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private ShoppingCart shoppingCart;
 	
 	@JsonBackReference
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private  List<Order> order;
 
-	public String getUser_name() {
-		return user_name;
+	public String getId() {
+		return this.id;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setId(String id) {
+		if(id == null)
+			this.id = UUID.randomUUID().toString();
+		else
+			this.id = id;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -85,7 +107,7 @@ public class Users extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "Users [id="+super.getId()+" user_name=" + user_name + ", password=" + password + ", email=" + email + ", roles=" + roles
+		return "Users [id="+id+" userName=" + userName + ", password=" + password + ", email=" + email + ", roles=" + roles
 				+ ", shoppingCart=" + shoppingCart + ", order=" + order + "]";
 	}
 	

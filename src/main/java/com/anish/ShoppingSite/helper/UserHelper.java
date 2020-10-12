@@ -18,7 +18,7 @@ public class UserHelper {
 		user.setId(usr.getId());
 		user.setEmail(usr.getEmail());
 		user.setPassword(usr.getPassword());
-		user.setUser_name(usr.getName());
+		user.setUserName(usr.getName());
 		user.setRoles(new Roles());
 		if(usr.getRole().equalsIgnoreCase("admin"))
 		{
@@ -29,7 +29,6 @@ public class UserHelper {
 			user.getRoles().setId(2);
 			user.getRoles().setRole("ROLE_USER");
 		}
-		user.setShoppingCart(new ShoppingCart());
 		return user;
 	}
 	
@@ -38,7 +37,7 @@ public class UserHelper {
 		
 		HashMap<String,Object> responce = new HashMap<String, Object>();
 		responce.put("id",user.getId());
-		responce.put("name",user.getUser_name());
+		responce.put("name",user.getUserName());
 		responce.put("email",user.getEmail());
 		responce.put("roles",user.getRoles());
 		return responce;

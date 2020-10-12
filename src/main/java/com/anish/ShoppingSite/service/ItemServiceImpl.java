@@ -28,68 +28,57 @@ public class ItemServiceImpl implements ItemService {
 
 	@Transactional
 	@Override
-	public HashMap<String, Object> createItem(long userId, Item item) {
+	public HashMap<String, Object> createItem(Item item) {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
-			if (userService.isUserAdmin(userId)) {
-				Item save = itemRepo.save(item);
-				if(save == null)
-					throw new ItemServiceException("Item Creation failed");
-				hm.put("message", "Your Item has been Created Successfully");
-				hm.put("Item", save);
-			} else
-				throw new AccessDeniedException("Access denied");
+		Item save = itemRepo.save(item);
+		if (save == null)
+			throw new ItemServiceException("Item Creation failed");
+		hm.put("message", "Your Item has been Created Successfully");
+		hm.put("Item", save);
 		return hm;
 	}
 
 	@Transactional
 	@Override
-	public HashMap<String, Object> updateItem(long userId, Item item) {
+	public HashMap<String, Object> updateItem(Item item) {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
-		
-		if (userService.isUserAdmin(userId)) {
-			Item save = itemRepo.save(item);
-			if(save == null)
-				throw new ItemServiceException("Updating Item failed");
-			
-			hm.put("message", "Your Item has been Updated Successfully");
-			hm.put("Item", save);
-		} else
-			throw new AccessDeniedException("Access denied");
-	return hm;
+		Item save = itemRepo.save(item);
+		if (save == null)
+			throw new ItemServiceException("Updating Item failed");
+
+		hm.put("message", "Your Item has been Updated Successfully");
+		hm.put("Item", save);
+		return hm;
 	}
 
 	@Override
 	public List<Item> getItems() {
-		 List<Item> findAll = itemRepo.findAll();
-		 if(findAll.size()==0)
-			 throw new ItemServiceException("No Items found");
-		 return findAll;
+		List<Item> findAll = itemRepo.findAll();
+		if (findAll.size() == 0)
+			throw new ItemServiceException("No Items found");
+		return findAll;
 	}
 
 	@Transactional
 	@Override
-	public HashMap<String, Object> deleteItem(long userId, long id){
+	public HashMap<String, Object> deleteItem(long id) {
 
-	HashMap<String, Object> hm = new HashMap<String, Object>();
-	if (userService.isUserAdmin(userId)) {
-
+		HashMap<String, Object> hm = new HashMap<String, Object>();
 		Item item1;
 		item1 = itemRepo.findItemById(id);
-		if(item1==null)
+		if (item1 == null)
 			throw new ItemNotFoundException("Item Not found");
-		
+
 		itemRepo.delete(item1);
 		hm.put("message", "Your Item has been deleted Successfully");
-	}else
-		throw new AccessDeniedException("Access denied");
-	return hm;
+		return hm;
 	}
 
 	@Override
 	public Item getItem(long id) {
 		Item item1;
 		item1 = itemRepo.findItemById(id);
-		if(item1==null)
+		if (item1 == null)
 			throw new ItemNotFoundException("Item Not found");
 		return item1;
 	}

@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 
 public class USERS {
 
-	private long id;
+	private String id;
 	
 	@NotBlank(message = "Name Can not be Empty")
 	private String name;
@@ -18,11 +18,11 @@ public class USERS {
 	@NotBlank(message="Default value 'USER' must be entered")
 	private String role;
 	
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

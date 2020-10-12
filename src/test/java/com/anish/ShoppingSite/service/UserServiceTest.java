@@ -44,45 +44,6 @@ public class UserServiceTest {
 		userService.setUserHelper(userHelper);
 	}
 	
-	
-	@Test(expected = UserNotFoundException.class)
-	public void isUserAdminforUserNotFoundException() {
-		
-		when(userRepo.findUserById(Mockito.anyLong())).thenReturn(null);
-		userService.isUserAdmin(Mockito.anyLong());
-		
-	}
-	
-	@Test
-	public void isUserAdminReturnFalse() {
-		Roles role = new Roles();
-		role.setId(1);
-		role.setRole("ROLE_USER");
-		Users user = new Users();
-		user.setId(1l);
-		user.setUser_name("User");
-		user.setRoles(role);
-		when(userRepo.findUserById(Mockito.anyLong())).thenReturn(user);
-		boolean userAdmin = userService.isUserAdmin(Mockito.anyLong());
-		assertEquals(false,userAdmin);
-		
-	}
-	
-	@Test
-	public void isUserAdminReturnTrue() {
-		Roles role = new Roles();
-		role.setId(1);
-		role.setRole("ROLE_ADMIN");
-		Users user = new Users();
-		user.setId(1l);
-		user.setUser_name("User");
-		user.setRoles(role);
-		when(userRepo.findUserById(Mockito.anyLong())).thenReturn(user);
-		boolean userAdmin = userService.isUserAdmin(Mockito.anyLong());
-		assertEquals(true,userAdmin);
-		
-	}
-	
 	@Test(expected = UserNotFoundException.class)
 	public void findUserByIdTestforUserNotFound() {
 		when(userRepo.findUserById(Mockito.anyLong())).thenReturn(null);

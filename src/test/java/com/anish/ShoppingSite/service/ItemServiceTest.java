@@ -54,7 +54,7 @@ public class ItemServiceTest {
 		item.setStockout(false);
 		when(userService.isUserAdmin(3l)).thenReturn(true);
 		when(itemRepo.save(item)).thenReturn(item);
-		HashMap<String, Object> createItem = itemServ.createItem(3l,item);
+		HashMap<String, Object> createItem = itemServ.createItem(item);
 		assertEquals("Your Item has been Created Successfully", createItem.get("message"));
 		
 	}
@@ -72,7 +72,7 @@ public class ItemServiceTest {
 		item.setStockout(false);
 		when(userService.isUserAdmin(3l)).thenReturn(false);
 		when(itemRepo.save(item)).thenReturn(item);
-		HashMap<String, Object> createItem = itemServ.createItem(3l,item);
+		HashMap<String, Object> createItem = itemServ.createItem(item);
 		assertEquals("Your Item has been Created Successfully", createItem.get("message"));
 		
 	}
@@ -90,7 +90,7 @@ public class ItemServiceTest {
 		item.setStockout(false);
 		when(userService.isUserAdmin(3l)).thenReturn(true);
 		when(itemRepo.save(item)).thenReturn(null);
-		HashMap<String, Object> createItem = itemServ.createItem(3l,item);
+		HashMap<String, Object> createItem = itemServ.createItem(item);
 		assertEquals("Your Item has been Created Successfully", createItem.get("message"));
 		
 	}
@@ -108,7 +108,7 @@ public class ItemServiceTest {
 		item.setStockout(false);
 		when(userService.isUserAdmin(3l)).thenReturn(true);
 		when(itemRepo.save(item)).thenReturn(item);
-		HashMap<String, Object> createItem = itemServ.updateItem(3l,item);
+		HashMap<String, Object> createItem = itemServ.updateItem(item);
 		assertEquals("Your Item has been Updated Successfully", createItem.get("message"));
 		
 	}
@@ -126,7 +126,7 @@ public class ItemServiceTest {
 		item.setStockout(false);
 		when(userService.isUserAdmin(3l)).thenReturn(false);
 		when(itemRepo.save(item)).thenReturn(item);
-		HashMap<String, Object> createItem = itemServ.updateItem(3l,item);
+		HashMap<String, Object> createItem = itemServ.updateItem(item);
 		assertEquals("Your Item has been Created Successfully", createItem.get("message"));
 		
 	}
@@ -144,7 +144,7 @@ public class ItemServiceTest {
 		item.setStockout(false);
 		when(userService.isUserAdmin(3l)).thenReturn(true);
 		when(itemRepo.save(item)).thenReturn(null);
-		HashMap<String, Object> createItem = itemServ.updateItem(3l,item);
+		HashMap<String, Object> createItem = itemServ.updateItem(item);
 		assertEquals("Your Item has been Updated Successfully", createItem.get("message"));
 		
 	}
@@ -202,7 +202,7 @@ public class ItemServiceTest {
 	public void deleteItemTestforAccessDeniedException() {
 			
 		when(userService.isUserAdmin(3l)).thenReturn(false);
-		itemServ.deleteItem(3l,1);
+		itemServ.deleteItem(1);
 		
 	}
 	
@@ -211,7 +211,7 @@ public class ItemServiceTest {
 		
 		when(userService.isUserAdmin(3l)).thenReturn(true);
 		when(itemRepo.findItemById(Mockito.anyLong())).thenReturn(null);
-		itemServ.deleteItem(3l,Mockito.anyLong());
+		itemServ.deleteItem(Mockito.anyLong());
 		
 	}
 	
@@ -228,7 +228,7 @@ public class ItemServiceTest {
 		item.setStockout(false);
 		when(userService.isUserAdmin(3l)).thenReturn(true);
 		when(itemRepo.findItemById(Mockito.anyLong())).thenReturn(item);
-		HashMap<String, Object> deleteItem = itemServ.deleteItem(3l,Mockito.anyLong());
+		HashMap<String, Object> deleteItem = itemServ.deleteItem(Mockito.anyLong());
 		assertEquals("Your Item has been deleted Successfully", deleteItem.get("message"));
 		
 	}

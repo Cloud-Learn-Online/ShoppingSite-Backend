@@ -22,41 +22,17 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UsersRepo userRepo;
-	
-	@Autowired
-	private ShoppingCartService shoppingCartService;
-	
+		
 	@Autowired
 	private UserHelper userServiceHelper;
-
-
-	public void setUserRepo(UsersRepo userRepo) {
-		this.userRepo = userRepo;
-	}
-
-	public void setShoppingcartservice(ShoppingCartService shoppingcartservice) {
-		this.shoppingCartService = shoppingcartservice;
-	}
 
 	public void setUserHelper(UserHelper userServiceHelper) {
 		this.userServiceHelper = userServiceHelper;
 	}
-
-	public boolean isUserAdmin(long userId) {
-		Users user = null;
-		user = userRepo.findUserById(userId);
-		if(user == null)
-			throw new UserNotFoundException("User not found");
-		String string = "ROLE_ADMIN";
-		if (user.getRoles().getRole().equals(string)) {
-			return true;
-		}
-		return false;
-	}
 	
-	public Users findUserById(long user_id){
+	public Users findUserByEmail(String email){
 		Users user = null;
-		user = userRepo.findUserById(user_id);
+		user = userRepo.findByEmail(email);
 		if(user == null)
 			throw new UserNotFoundException("User not found");
 		return user;
@@ -78,12 +54,15 @@ public class UserServiceImpl implements UserService {
 
 		Users users= null;
 		Users user = userServiceHelper.getUsersObject(userReuestBody);
+		
 		ShoppingCart shoppingCart = new ShoppingCart();
-		ShoppingCart createCart = shoppingCartService.createCart(shoppingCart);
-		user.setShoppingCart(createCart);
+		user.setShoppingCart(shoppingCart);
+		shoppingCart.setUser(user);
+		
 		users = userRepo.save(user);
 		if(users == null)
 			throw new UserServiceExcpetion("User Creation failed");
+		
 		return userServiceHelper.getUserResponce(users);
 	}
 
@@ -100,15 +79,14 @@ public class UserServiceImpl implements UserService {
 		return responceList;
 	}
 
-
 	@Override
-	public HashMap<String, Object> removeUser(long user_id) throws UserNotFoundException {
+	public HashMap<String, Object> removeUser(String email) throws UserNotFoundException {
 		
 		HashMap<String,Object> responce = new HashMap<String, Object>();
-		Users findUserById = userRepo.findUserById(user_id);
+		Users findUserById = userRepo.findByEmail(email);
 		if(findUserById == null)
 			throw new UserNotFoundException("User not found");
-		shoppingCartService.removeCart(user_id);
+		//shoppingCartService.removeCart(user_id);
 		userRepo.delete(findUserById);
 		responce.put("message","User deletion is successful");
 		return responce;

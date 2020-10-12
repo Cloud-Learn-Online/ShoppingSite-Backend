@@ -5,12 +5,9 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="cart_items")
@@ -21,9 +18,8 @@ public class CartItems extends AbstractEntity implements Serializable{
 	@OneToOne(cascade = CascadeType.MERGE)
 	private Item item;
 	
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinTable(name="cart_cartitems",joinColumns={@JoinColumn(name="cart_items_id")}, inverseJoinColumns={@JoinColumn(name="cart_id")})
+	@ManyToOne
+    @JoinColumn(name="cart_id", nullable=false)
 	private ShoppingCart shoppingCart;
 	
 	private int quantity;
@@ -56,6 +52,4 @@ public class CartItems extends AbstractEntity implements Serializable{
 	public String toString() {
 		return "CartItems [item=" + item + ", shoppingCart=" + shoppingCart + ", quantity=" + quantity + "]";
 	}
-	
-
 }

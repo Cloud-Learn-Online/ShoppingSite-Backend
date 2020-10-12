@@ -8,9 +8,9 @@ import com.anish.ShoppingSite.dto.ORDER;
 public interface OrderService {
 
 
-	public List<ORDER> orderList(long user_id);
+	public List<ORDER> orderList(String user_id);
 
-	public ORDER createOrder(ORDER order, long user_id);
+	public ORDER createOrder(ORDER order, String user_id);
 
 	public HashMap<String,Object> removeOrderedItem(long orderedItemID);
 	

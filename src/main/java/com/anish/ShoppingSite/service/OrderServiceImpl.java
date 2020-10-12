@@ -3,16 +3,17 @@ package com.anish.ShoppingSite.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.anish.ShoppingSite.dto.ORDER;
 import com.anish.ShoppingSite.exceptions.BadRequest;
 import com.anish.ShoppingSite.exceptions.OrderNotFoundException;
-import com.anish.ShoppingSite.exceptions.OrderServiceException;
 import com.anish.ShoppingSite.exceptions.UserNotFoundException;
 import com.anish.ShoppingSite.helper.OrderHelper;
 import com.anish.ShoppingSite.model.Order;
@@ -55,25 +56,25 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public ORDER createOrder(ORDER odr,long user_id) {
+	public ORDER createOrder(ORDER odr,String user_id) {
 		ORDER responce=null;
 		Order order = orderHelper.getOrdersObject(odr);
-		Users findUserById = userService.findUserById(user_id);
-		if(findUserById == null)			
+		Users findUserByEmail = userService.findUserByEmail(user_id);
+		if(findUserByEmail == null)			
 			throw new UserNotFoundException("User does not exist");
-		order.setUser(findUserById);
+		order.setUser(findUserByEmail);
 		Order save = orderRepo.save(order);	
 		responce=orderHelper.getOrderResponce(save);
 		return responce;
 	}
 
 	@Override
-	public List<ORDER> orderList(long user_id) {
+	public List<ORDER> orderList(String email) {
 		
 		List<ORDER> responce = null;
 		Users foundUser = null;
 		List<Order> ordersByUserId =null;
-		foundUser = userService.findUserById(user_id);
+		foundUser = userService.findUserByEmail(email);
 		ordersByUserId = orderRepo.getOrdersByUsers(foundUser);
 		responce = new ArrayList<ORDER>();
 		for(Order o : ordersByUserId) {
@@ -97,14 +98,22 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public String cancelOrder(long orderID) {
-		Order findById;
-		findById = orderRepo.findOrderById(orderID);
-		if(findById == null)
+	public String cancelOrder(long orderId) {
+		Optional<Order> findById;
+		System.out.println("Trace");
+		findById = orderRepo.findById(orderId);
+		if(findById.isPresent()) {
+			Order order = findById.get();
+			String status = order.getOrder_status();
+			if(!StringUtils.isEmpty(status) && status.equalsIgnoreCase("COMPLETED"))
+				throw new BadRequest("Completed order cannot be cancelled");
+			
+			System.out.println("Trace id");
+			orderRepo.delete(order);
+			System.out.println("Trace deletion");
+		}
+		else
 			throw new OrderNotFoundException("Order not found");
-		if(findById.getOrder_status().equalsIgnoreCase("COMPLETED"))
-			throw new BadRequest("Completed order cannot be cancelled");
-		orderRepo.delete(findById);
 		return "Order cancelled Successfully";
 	}
 }
